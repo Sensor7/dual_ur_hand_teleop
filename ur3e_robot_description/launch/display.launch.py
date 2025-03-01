@@ -10,7 +10,7 @@ import xacro
 def generate_launch_description():
 
     package_name = 'ur3e_robot_description'
-    rviz_file_name = 'ur3e_robot_config.rviz'
+    rviz_file_name = 'view_robot.rviz'
     rviz_file_path = os.path.join(
         get_package_share_directory(package_name),
         'rviz',
@@ -23,36 +23,11 @@ def generate_launch_description():
         name='rviz',
         arguments=['-d', rviz_file_path],
         output='screen')
-    
-    robot_description_path = os.path.join(get_package_share_directory(
-                                    'ur3e_robot_description'), 
-                                    'urdf','ur3e',
-                                    'robot.urdf.xacro')
-    
-    robot_description = xacro.process_file(robot_description_path).toxml()
-    robot_namespace = ''
-    robot_state_publisher = Node(package='robot_state_publisher',
-                                  executable='robot_state_publisher',
-                                  output='screen',
-                                  parameters=[
-                                    {'robot_description': robot_description},
-                                    {'frame_prefix': robot_namespace+'/'}
-                                  ],
-                                  namespace=robot_namespace,
-                                  
-    )
-    
-    joint_state_publisher = Node(package='joint_state_publisher',
-                                    executable='joint_state_publisher',
-                                    name='joint_state_publisher',
-                                    namespace=robot_namespace
-    )
+
 
     # Launch Description
     launch_description = LaunchDescription()
     launch_description.add_action(rviz)
-    launch_description.add_action(robot_state_publisher)
-    launch_description.add_action(joint_state_publisher)
     return launch_description
 
 def main(args=None):
