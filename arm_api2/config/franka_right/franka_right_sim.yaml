@@ -1,0 +1,62 @@
+robot: 
+  arm_name: right_arm  
+  ee_link_name: R_panda_link8
+  robot_desc: robot_description
+  move_group_ns: 
+  planning_scene: planning_scene
+  planning_frame: R_panda_link0
+  num_cart_pts: 20
+  joint_states: joint_states
+  max_vel_scaling_factor: 0.1
+  max_acc_scaling_factor: 0.1
+  with_planner: true
+topic:
+  sub:
+    cmd_pose:
+      name: right_arm/cmd/pose
+      queue: 1
+    cmd_traj: 
+      name: right_arm/cmd/traj
+      queue: 1
+    cmd_tool_orientation:
+      name: right_tool/cmd/orient
+      queue: 1
+    cmd_delta_pose: 
+      name: right_arm/cmd/deta_pose
+      queue: 1
+    joint_states:
+      name: right_joint_states
+      queue: 1  
+  pub:
+    display_trajectory:
+      name: right_arm/display_path
+      queue: 1
+    current_pose:
+      name: right_arm/state/current_pose
+      queue: 1
+    current_robot_state:
+      name: right_arm/state/current_state
+      queue: 1
+srv: 
+  disable_collision: 
+    name: /move_group/disable_collision
+  add_collision: 
+    name: /move_group/add_collision
+  change_robot_state: 
+    name: right_arm/change_state
+  set_vel_acc:
+    name: right_arm/set_vel_acc
+  set_eelink:
+    name: right_arm/set_eelink
+  set_planonly:
+    name: right_arm/set_planonly
+
+action:
+  move_to_pose:
+    name: right_arm/move_to_pose
+  move_to_joint:
+    name: right_arm/move_to_joint
+  move_to_pose_path:
+    name: right_arm/move_to_pose_path
+  gripper_control:
+    name: right_arm/gripper_control
