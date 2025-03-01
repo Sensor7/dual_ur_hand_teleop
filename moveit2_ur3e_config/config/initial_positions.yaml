@@ -1,14 +1,14 @@
 # Default initial positions for ur3e_bot's ros2_control fake system
 
 initial_positions:
-  L_elbow_joint: 1.3
+  L_elbow_joint: 1.57
   L_finger_joint: 0
   L_shoulder_lift_joint: -1.57
   L_shoulder_pan_joint: 1.57
   L_wrist_1_joint: -1.57
   L_wrist_2_joint: -1.57
   L_wrist_3_joint: -1.57
-  R_elbow_joint: 1.3
+  R_elbow_joint: 1.57
   R_finger_joint: 0
   R_shoulder_lift_joint: -1.57
   R_shoulder_pan_joint: 1.57
