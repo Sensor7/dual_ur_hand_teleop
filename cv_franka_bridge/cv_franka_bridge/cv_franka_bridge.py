@@ -52,8 +52,8 @@ class CvFrankaBridge(Node):
 
         # declare parameters
         self.declare_parameter('x_limits', "0.2,0.6")
-        self.declare_parameter('y_limits', "-0.25,0.25")
-        self.declare_parameter('z_limits', "0.2,0.7")
+        self.declare_parameter('y_limits', "-0.4,0.4")
+        self.declare_parameter('z_limits', "0.9,1.3")
 
         # get parameters
         self.x_limits = [float(value) for value in self.get_parameter('x_limits').get_parameter_value().string_value.split(",")]
@@ -136,7 +136,7 @@ class CvFrankaBridge(Node):
         self.left_previous_waypoint = None
         self.left_current_waypoint_quat = None
         self.left_offset = None
-        self.left_initial_ee_pose = Pose(position=Point(x=0.30674, y=0.499969, z=0.590256),
+        self.left_initial_ee_pose = Pose(position=Point(x=0.29877, y=0.130874, z=1.06),
                                         orientation=Quaternion(x=1.0, y=0.0, z=0.0, w=0.0))
         self.left_desired_ee_pose = self.left_initial_ee_pose
         self.left_waypoints = []
@@ -148,7 +148,7 @@ class CvFrankaBridge(Node):
         self.right_previous_waypoint = None
         self.right_current_waypoint_quat = None
         self.right_offset = None
-        self.right_initial_ee_pose = Pose(position=Point(x=0.30674, y=-0.5, z=0.59),
+        self.right_initial_ee_pose = Pose(position=Point(x=0.29877, y=-0.629125, z=1.06),
                                         orientation=Quaternion(x=1.0, y=0.0, z=0.0, w=0.0))
         self.right_desired_ee_pose = self.right_initial_ee_pose
         self.right_waypoints = []
@@ -185,9 +185,9 @@ class CvFrankaBridge(Node):
         # bounding box variables
         self.x_limits = [0.2, 0.6]
         self.y_limits = [-0.25, 0.25]
-        self.left_y_limits = [0.25, 0.75]
-        self.right_y_limits = [-0.75, -0.25]
-        self.z_limits = [0.2, 0.8]
+        self.left_y_limits = [-0.35, 0.35]
+        self.right_y_limits = [-1.0, -0.48]
+        self.z_limits = [0.98, 1.22]
         self.left_bounding_box_marker = self.create_box_marker(prefix="L_")
         self.right_bounding_box_marker = self.create_box_marker(prefix="R_")
 
@@ -227,7 +227,7 @@ class CvFrankaBridge(Node):
     def create_text_marker(self, text, prefix=None):
         """Create a text marker."""
         marker = Marker()
-        marker.header.frame_id = f"{prefix}panda_link0"
+        marker.header.frame_id = f"{prefix}base_link"
         marker.header.stamp = self.get_clock().now().to_msg()
         marker.type = marker.TEXT_VIEW_FACING
         marker.action = marker.ADD
@@ -245,7 +245,7 @@ class CvFrankaBridge(Node):
     def create_box_marker(self, prefix=None):
         """Create a line strip that represents the bounding box."""
         marker = Marker()
-        marker.header.frame_id = f"{prefix}panda_link0"
+        marker.header.frame_id = f"{prefix}base_link"
         marker.header.stamp = self.get_clock().now().to_msg()
         marker.type = marker.LINE_STRIP
         marker.action = marker.ADD
@@ -407,14 +407,14 @@ class CvFrankaBridge(Node):
             self.left_gripper_ready = False
             self.left_gripper_force_control = False
             self.left_gripper_force = 40.0
-            self.send_gripper_commamd("L_", 0.0, self.left_gripper_force)
+            self.send_gripper_commamd("L_", 0.7, self.left_gripper_force)
             self.left_gripper_status = "Closed"
 
         elif msg.data == "Open_Palm" and self.left_gripper_ready and self.left_gripper_status == "Closed":
             # if open palm, open the gripper
             self.left_text_marker = self.create_text_marker(msg.data, prefix="L_")
             self.left_gripper_force = 3.0
-            self.send_gripper_commamd("L_", 0.035, self.left_gripper_force)
+            self.send_gripper_commamd("L_", 0.0, self.left_gripper_force)
             self.left_gripper_status = "Open"
 
         if msg.data != "Thumb_Up" and msg.data != "Thumb_Down":
@@ -464,14 +464,14 @@ class CvFrankaBridge(Node):
             self.right_gripper_ready = False
             self.right_gripper_force_control = False
             self.right_gripper_force = 40.0
-            self.send_gripper_commamd("R_", 0.0, self.right_gripper_force)
+            self.send_gripper_commamd("R_", 0.7, self.right_gripper_force)
             self.right_gripper_status = "Closed"
 
         elif msg.data == "Open_Palm" and self.right_gripper_ready and self.right_gripper_status == "Closed":
             # if open palm, open the gripper
             self.right_text_marker = self.create_text_marker(msg.data, prefix="R_")
             self.right_gripper_force = 3.0
-            self.send_gripper_commamd("R_", 0.035, self.right_gripper_force)
+            self.send_gripper_commamd("R_", 0.0, self.right_gripper_force)
             self.right_gripper_status = "Open"
 
         if msg.data != "Thumb_Up" and msg.data != "Thumb_Down":

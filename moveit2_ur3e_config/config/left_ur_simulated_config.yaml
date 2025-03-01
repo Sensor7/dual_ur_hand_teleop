@@ -41,7 +41,7 @@ check_octomap_collisions: false
 ## MoveIt properties
 move_group_name: left_arm  # Often 'manipulator' or 'arm'
 
-planning_frame: world # The MoveIt planning frame. Often 'base_link' or 'world'
+planning_frame: L_base_link # The MoveIt planning frame. Often 'base_link' or 'world'
 
 ## Other frames
 ee_frame_name: L_tool0  # The name of the end effector link, used to return the EE pose

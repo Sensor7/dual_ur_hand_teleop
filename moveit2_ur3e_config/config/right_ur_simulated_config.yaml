@@ -40,7 +40,7 @@ is_primary_planning_scene_monitor: true
 ## MoveIt properties
 move_group_name: right_arm  # Often 'manipulator' or 'arm'
 
-planning_frame: world  # The MoveIt planning frame. Often 'base_link' or 'world'
+planning_frame: R_base_link  # The MoveIt planning frame. Often 'base_link' or 'world'
 
 ## Other frames
 ee_frame_name: R_tool0  # The name of the end effector link, used to return the EE pose
